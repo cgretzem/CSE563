@@ -5,16 +5,23 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FileManager 
 {
-    public HashMap<String, Integer> loadAttendanceFile(File f) throws IOException
+    private ArrayList<Student> students_list;
+    public HashMap<String, Integer> loadAttendanceFile(String path) throws IOException
     {
         HashMap<String, Integer> attMap = new HashMap<String, Integer>();
         BufferedReader reader;
 
 		
-        reader = new BufferedReader(new FileReader(f.getPath()));
+        reader = new BufferedReader(new FileReader(path));
         String line = reader.readLine();
 
         while (line != null) {
@@ -35,5 +42,35 @@ public class FileManager
         reader.close();
 		
         return attMap;
+    }
+
+    public void loadRoster(Component parent) throws IOException {
+        //implement file chooser.
+        String selectedPath="";
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files", "csv", "CSV");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(parent);
+        if(returnVal == JFileChooser.APPROVE_OPTION)
+            selectedPath= chooser.getSelectedFile().getAbsolutePath();
+        if(!selectedPath.equals(""))
+            loadDetailsToDataStructure(selectedPath);
+    }
+
+    private void loadDetailsToDataStructure(String selectedPath) throws IOException {
+        BufferedReader br=new BufferedReader(new FileReader(selectedPath));
+        students_list=new ArrayList<>();
+        String strLine;
+        while( (strLine = br.readLine()) != null) {
+            String[] student_details = strLine.split(",");
+            if (student_details.length == 4) {
+                System.out.println(Arrays.toString(student_details));
+                int id = Integer.parseInt(student_details[0]);
+                Student student = new Student(id, student_details[1], student_details[2], student_details[3]);
+                students_list.add(student);
+            }
+
+        }
+
     }
 }

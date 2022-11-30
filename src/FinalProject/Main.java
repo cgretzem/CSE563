@@ -16,7 +16,11 @@ public class Main extends JFrame
 		Dimension minSize = new Dimension(500,500);
 		frame.setMaximumSize(maxSize);
 		frame.setMinimumSize(minSize);
-
+		Controller controller = new Controller(frame);
+		//System.out.println(controller);
+		controller.setVisible(true);
+		frame.getContentPane().add(controller, BorderLayout.WEST);
+		frame.pack();
 		frame.setVisible(true);
     }
 }
