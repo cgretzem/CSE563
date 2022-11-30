@@ -89,7 +89,7 @@ public class Ledger{
 
     public String[][] generateRosterData()
     {
-        String[][] output = new String[roster.size()][4];
+        String[][] output = new String[roster.size()+1][4];
         output[0][0] = "ID";
         output[0][1] = "First Name";
         output[0][2] = "Last Name";
