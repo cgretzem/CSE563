@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Controller extends JPanel implements ActionListener{
     private Ledger ledger;
@@ -28,13 +29,17 @@ public class Controller extends JPanel implements ActionListener{
         if(action == "Upload")
         {
             try {
-                filemanager.loadRoster(frame);
-                ledger.addRoster(filemanager.students_list);
+                ArrayList<Student> roster = filemanager.loadRoster(frame);
+                ledger.addRoster(roster);
                 String[][] res=ledger.generateRosterData();
                 // get data from output ledger and print on the screen in JTable.
                 constructJTable(res);
 
             } catch (IOException ex) {
+                /*
+                 * TODO:
+                 * Add Error popup that tells user that they must select a CSV File
+                */
                 throw new RuntimeException(ex);
             }
         }
