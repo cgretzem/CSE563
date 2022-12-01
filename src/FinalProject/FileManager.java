@@ -41,32 +41,8 @@ public class FileManager
         return attMap;
     }
 
-    public ArrayList<Student> loadRoster(Component parent) throws IOException {
-        //implement file chooser.
-        String selectedPath="";
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files", "csv", "CSV");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(parent);
-        if(returnVal == JFileChooser.APPROVE_OPTION)
-        {
-            selectedPath= chooser.getSelectedFile().getAbsolutePath();
-            if(!selectedPath.equals(""))
-                return loadDetailsToDataStructure(selectedPath);
-            else
-            {
-                throw new IOException("CSV file not selected");
-            }
-        }
-        else
-        {
-            throw new IOException("CSV File not selected");
-        }
-            
-        
-    }
 
-    private ArrayList<Student> loadDetailsToDataStructure(String selectedPath) throws IOException {
+    public ArrayList<Student> loadDetailsToDataStructure(String selectedPath) throws IOException {
         BufferedReader br=new BufferedReader(new FileReader(selectedPath));
         ArrayList<Student> students_list=new ArrayList<Student>();
         String strLine;
