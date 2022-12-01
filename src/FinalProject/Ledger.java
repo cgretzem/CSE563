@@ -89,26 +89,28 @@ public class Ledger{
         return attendanceData;
     }
 
+    public String getRecentDate()
+    {
+        return attendanceDates.get(attendanceDates.size()-1);
+    }
+
     public String[] generateColumn()
     {
         int size = roster.size();
         String[] output = new String[size];
         HashMap<String, Integer> data = attendanceData.get(attendanceData.size()-1);
-        output[0] = attendanceDates.get(attendanceDates.size()-1).toString().replace('-', '/');
-        int count = 1;
         for(int i = 0; i < roster.size(); i++)
         {
             String asurite = roster.get(i).getAsurite();
             
             if(data.containsKey(asurite))
             {
-                output[count] = String.valueOf(data.get(asurite));
+                output[i] = String.valueOf(data.get(asurite));
             }
             else
             {
-                output[count] = "0";
+                output[i] = "0";
             }
-            count++;
         }
         return output;
     }

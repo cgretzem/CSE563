@@ -1,10 +1,9 @@
 package FinalProject;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -43,7 +42,8 @@ public class Controller extends JPanel implements ActionListener{
                  * TODO:
                  * Add Error popup that tells user that they must select a CSV File
                 */
-                throw new RuntimeException(ex);
+                display.displayError(new Exception("Error Loading File"));
+                return;
             }
         }
 
@@ -63,6 +63,8 @@ public class Controller extends JPanel implements ActionListener{
             try{
                 HashMap<String, Integer> attMap = filemanager.loadAttendanceFile(path);
                 ledger.addAttendance(path.substring(path.length()-12, path.length()-3), attMap);
+                String recentDate = ledger.getRecentDate();
+                display.addAttendanceColumn(recentDate, ledger.generateColumn());
             }
             catch(IOException ex)
             {

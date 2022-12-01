@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 
 public class Display extends JPanel{
@@ -15,6 +17,7 @@ public class Display extends JPanel{
     private JTable table;
     private JScrollPane scp;
     Controller parent;
+    private DefaultTableModel model;
 
     public Display(JFrame frame, Controller parent) {
         this.frame=frame;
@@ -54,13 +57,21 @@ public class Display extends JPanel{
         if(table == null)
         {
             String[] columnNames = {"ID", "First Name", "Last Name", "Asurite"};
-            table = new JTable(data, columnNames);
+            model = new DefaultTableModel(data, columnNames);
+            table = new JTable(model);
             table.setBounds(30, 40, 200, 300);
             scp = new JScrollPane(table);
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             frame.add(scp, BorderLayout.CENTER);
             frame.revalidate();
         }
     
+    }
+
+    public void addAttendanceColumn(String date, String[] col)
+    {
+        model.addColumn(date, col);
+        frame.revalidate();
     }
 
 
