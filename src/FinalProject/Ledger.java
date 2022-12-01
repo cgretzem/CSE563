@@ -1,8 +1,11 @@
 package FinalProject;
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.HashMap;
+
 
 
 public class Ledger{
@@ -11,14 +14,14 @@ public class Ledger{
     //these two are intertwined, attendanceDates and attendanceData indecies are the same. For example,
     //if 11/21/2020 is in index 3 of attendanceDates, the attendanceData for 11/21/2020 will be in index 3 of attendanceData
     private ArrayList<HashMap<String, Integer>> attendanceData;
-    private ArrayList<LocalDate> attendanceDates; 
+    private ArrayList<String> attendanceDates; 
     
     //singleton design pattern
     private Ledger()
     {
         roster = new ArrayList<Student>();
         attendanceData = new ArrayList<HashMap<String, Integer>>();
-        attendanceDates = new ArrayList<LocalDate>();
+        attendanceDates = new ArrayList<String>();
     }
 
     public static Ledger getInstance()
@@ -36,10 +39,16 @@ public class Ledger{
     }
 
 
-    public void addAttendance(String date, HashMap<String, Integer> attMap)
+    public void addAttendance(String date, HashMap<String, Integer> attMap) throws ParseException
     {
         //date must be YYYYMMDD
-        LocalDate lDate = LocalDate.parse(date);
+        
+        DateFormat format = new SimpleDateFormat("YYYYMMDD");
+        Date theDate = new Date();
+         theDate = format.parse(date);
+        DateFormat printFormat = new SimpleDateFormat("MM/DD/YYYY");
+        String lDate = printFormat.format(theDate);
+        
         int index = 0;
         if(!attendanceDates.contains(lDate))
         {
@@ -51,6 +60,23 @@ public class Ledger{
         {
             index = attendanceDates.indexOf(lDate);
         }
+
+        // HashMap<String, Integer> newStudents = new HashMap<String, Integer>();
+
+        // for(String key : attMap.keySet())
+        // {
+        //     boolean inRoster = false;
+        //     for(Student student : roster)
+        //         if(key == student.getAsurite())
+        //             inRoster = true;
+                
+        //     if(!inRoster)
+        //     {
+        //         newStudents.put(key, attMap.get(key));
+        //         attMap.remove(key); // remove the new student from the attendance map   
+        //     }
+        // }
+
         attendanceData.get(index).putAll(attMap);
     }
 
@@ -89,14 +115,11 @@ public class Ledger{
 
     public String[][] generateRosterData()
     {
-        String[][] output = new String[roster.size()+1][4];
-        output[0][0] = "ID";
-        output[0][1] = "First Name";
-        output[0][2] = "Last Name";
-        output[0][3] = "Asurite";
-        for(int i = 1; i <= roster.size(); i++)
+        String[][] output = new String[roster.size()][4];
+
+        for(int i = 0; i < roster.size(); i++)
         {
-            Student curr = roster.get(i-1);
+            Student curr = roster.get(i);
             output[i][0] = String.valueOf(curr.getID());
             output[i][1] = curr.getFirst();
             output[i][2] = curr.getLast();
