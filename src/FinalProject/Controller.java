@@ -62,9 +62,31 @@ public class Controller extends JPanel implements ActionListener{
             }
             try{
                 HashMap<String, Integer> attMap = filemanager.loadAttendanceFile(path);
+                ArrayList<Student> roster = ledger.getRoster();
+                HashMap<String, Integer> newStudents = new HashMap<String, Integer>();
+                
+                for(String key : attMap.keySet())
+                {
+                    boolean inRoster = false;
+                    for(Student student : roster)
+                    {
+                        if(key.equals(student.getAsurite()))
+                        {
+                            inRoster = true;
+                            break;
+                        }
+                    }
+                    
+                    if(!inRoster)
+                        newStudents.put(key, attMap.get(key));
+                }
+
                 ledger.addAttendance(path.substring(path.length()-12, path.length()-3), attMap);
                 String recentDate = ledger.getRecentDate();
+
                 display.addAttendanceColumn(recentDate, ledger.generateColumn());
+                if(newStudents.size() > 0)
+                    display.notifyUser(newStudents, roster.size());
             }
             catch(IOException ex)
             {

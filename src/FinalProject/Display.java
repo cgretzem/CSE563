@@ -9,6 +9,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Display extends JPanel{
 
@@ -50,6 +52,31 @@ public class Display extends JPanel{
         box.setSize(300,200);
         box.setVisible(true);
 
+    }
+
+    public void notifyUser(HashMap<String, Integer> newStudents, int numLoaded)
+    {
+        String message = "Data loaded for " + numLoaded + " users in the roster.\n" + newStudents.size();
+
+        if(newStudents.size() == 1)
+            message += " additional attendee was found.\n\n";
+        else
+            message += " additional attendees were found.\n\n";
+
+        for(int i = 0; i < newStudents.size(); i++)
+        {
+            String asurite = newStudents.keySet().toArray()[i].toString();
+            int minutes = newStudents.get(asurite);
+            String result;
+            if(minutes == 1)
+                result = asurite + ", connected for " + minutes + " minute\n";
+            else
+                result = asurite + ", connected for " + minutes + " minutes\n";
+
+            message += result;
+        }      
+
+        JOptionPane.showMessageDialog(frame, message);
     }
     
     public void displayTable(String[][] data)
