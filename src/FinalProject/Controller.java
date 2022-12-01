@@ -56,7 +56,7 @@ public class Controller extends JPanel implements ActionListener{
             }
             try{
                 HashMap<String, Integer> attMap = filemanager.loadAttendanceFile(path);
-                ledger.addAttendance(path, attMap);
+                ledger.addAttendance(path.substring(path.length()-12, path.length()-3), attMap);
             }
             catch(IOException ex)
             {

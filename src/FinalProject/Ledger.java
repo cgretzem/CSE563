@@ -1,8 +1,12 @@
 package FinalProject;
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.HashMap;
+
+import javax.swing.text.DateFormatter;
 
 
 public class Ledger{
@@ -11,14 +15,14 @@ public class Ledger{
     //these two are intertwined, attendanceDates and attendanceData indecies are the same. For example,
     //if 11/21/2020 is in index 3 of attendanceDates, the attendanceData for 11/21/2020 will be in index 3 of attendanceData
     private ArrayList<HashMap<String, Integer>> attendanceData;
-    private ArrayList<LocalDate> attendanceDates; 
+    private ArrayList<String> attendanceDates; 
     
     //singleton design pattern
     private Ledger()
     {
         roster = new ArrayList<Student>();
         attendanceData = new ArrayList<HashMap<String, Integer>>();
-        attendanceDates = new ArrayList<LocalDate>();
+        attendanceDates = new ArrayList<String>();
     }
 
     public static Ledger getInstance()
@@ -39,7 +43,19 @@ public class Ledger{
     public void addAttendance(String date, HashMap<String, Integer> attMap)
     {
         //date must be YYYYMMDD
-        LocalDate lDate = LocalDate.parse(date);
+        
+        DateFormat format = new SimpleDateFormat("YYYYMMDD");
+        Date theDate = new Date();
+        try {
+            theDate = format.parse(date);
+        } catch (ParseException e) {
+            //TODO: Add error message saying file name formatted incorrectly.
+            e.printStackTrace();
+            return;
+        }
+        DateFormat printFormat = new SimpleDateFormat("MM/DD/YYYY");
+        String lDate = printFormat.format(theDate);
+        
         int index = 0;
         if(!attendanceDates.contains(lDate))
         {
