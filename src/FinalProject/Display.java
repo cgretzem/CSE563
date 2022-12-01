@@ -1,5 +1,7 @@
 package FinalProject;
 
+import java.awt.BorderLayout;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -8,7 +10,8 @@ public class Display extends JPanel{
 
     JFrame frame;
     JMenuBar menuBar;
-
+    private JTable table;
+    private JScrollPane scp;
     Controller parent;
 
     public Display(JFrame frame, Controller parent) {
@@ -43,6 +46,21 @@ public class Display extends JPanel{
         box.setVisible(true);
 
     }
+    
+    public void displayTable(String[][] data)
+    {
+        if(table == null)
+        {
+            String[] columnNames = {"ID", "First Name", "Last Name", "Asurite"};
+            table = new JTable(data, columnNames);
+            table.setBounds(30, 40, 200, 300);
+            scp = new JScrollPane(table);
+            frame.add(scp, BorderLayout.CENTER);
+            frame.revalidate();
+        }
+    
+    }
+
 
     public String displayAttendanceFileChooser()
     {

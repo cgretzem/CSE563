@@ -16,7 +16,7 @@ public class Controller extends JPanel implements ActionListener{
 
     private JFrame frame;
 
-    private JTable table;
+
     Controller(JFrame frame) {
         ledger = Ledger.getInstance();
         this.frame=frame;
@@ -35,7 +35,8 @@ public class Controller extends JPanel implements ActionListener{
                 ledger.addRoster(roster);
                 String[][] res=ledger.generateRosterData();
                 // get data from output ledger and print on the screen in JTable.
-                constructJTable(res);
+                // constructJTable(res);
+                display.displayTable(res);
 
             } catch (IOException ex) {
                 /*

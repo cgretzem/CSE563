@@ -115,14 +115,11 @@ public class Ledger{
 
     public String[][] generateRosterData()
     {
-        String[][] output = new String[roster.size()+1][4];
-        output[0][0] = "ID";
-        output[0][1] = "First Name";
-        output[0][2] = "Last Name";
-        output[0][3] = "Asurite";
-        for(int i = 1; i <= roster.size(); i++)
+        String[][] output = new String[roster.size()][4];
+
+        for(int i = 0; i < roster.size(); i++)
         {
-            Student curr = roster.get(i-1);
+            Student curr = roster.get(i);
             output[i][0] = String.valueOf(curr.getID());
             output[i][1] = curr.getFirst();
             output[i][2] = curr.getLast();
