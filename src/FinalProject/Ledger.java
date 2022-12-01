@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import javax.swing.text.DateFormatter;
 
 
 public class Ledger{
@@ -40,19 +39,13 @@ public class Ledger{
     }
 
 
-    public void addAttendance(String date, HashMap<String, Integer> attMap)
+    public void addAttendance(String date, HashMap<String, Integer> attMap) throws ParseException
     {
         //date must be YYYYMMDD
         
         DateFormat format = new SimpleDateFormat("YYYYMMDD");
         Date theDate = new Date();
-        try {
-            theDate = format.parse(date);
-        } catch (ParseException e) {
-            //TODO: Add error message saying file name formatted incorrectly.
-            e.printStackTrace();
-            return;
-        }
+         theDate = format.parse(date);
         DateFormat printFormat = new SimpleDateFormat("MM/DD/YYYY");
         String lDate = printFormat.format(theDate);
         

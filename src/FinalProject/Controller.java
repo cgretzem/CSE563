@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -47,7 +48,11 @@ public class Controller extends JPanel implements ActionListener{
 
         if(action=="Add Attendance")
         {
-            
+            if(ledger.getRoster().size()==0)
+            {
+                display.displayError(new Exception("Roster must be uploaded before\nuploading attendance."));
+                return;
+            }
             String path = display.displayAttendanceFileChooser();
             if(path == "")
             {
@@ -60,7 +65,11 @@ public class Controller extends JPanel implements ActionListener{
             }
             catch(IOException ex)
             {
-                throw new RuntimeException(ex);
+                display.displayError(ex);
+            }
+            catch (ParseException ex)
+            {
+                display.displayError(new Exception("Invalid file name: Attendance file name must be\nDDMMYYYY.csv"));
             }
         
         }

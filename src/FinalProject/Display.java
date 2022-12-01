@@ -3,8 +3,6 @@ package FinalProject;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Display extends JPanel{
 
@@ -32,6 +30,18 @@ public class Display extends JPanel{
         addAttendanceItem.addActionListener(parent);
         menu.add(menuItem);
         menu.add(addAttendanceItem);
+    }
+
+
+    public void displayError(Exception ex)
+    {
+        JDialog box = new JDialog(frame, "ERROR");
+        //rendering trick to make JLabel able to have a new line
+        JLabel label = new JLabel("<html>" + ex.getMessage().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>", SwingConstants.CENTER);
+        box.add(label);
+        box.setSize(300,200);
+        box.setVisible(true);
+
     }
 
     public String displayAttendanceFileChooser()
