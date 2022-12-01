@@ -1,6 +1,8 @@
 package FinalProject;
 
 import java.awt.BorderLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -76,7 +78,23 @@ public class Display extends JPanel{
             message += result;
         }      
 
-        JOptionPane.showMessageDialog(frame, message);
+        // JOptionPane.showMessageDialog(frame, message);
+        JOptionPane optionPane = new JOptionPane(message, JOptionPane.OK_OPTION);
+        JDialog dialog = new JDialog(frame, "New Students Found", true);
+        dialog.setContentPane(optionPane);
+        optionPane.addPropertyChangeListener(
+            new PropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent e) {
+                    String prop = e.getPropertyName();
+
+                    if (dialog.isVisible() && (e.getSource() == optionPane) && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                        dialog.setVisible(false);
+                    }
+                }
+            }
+        );
+        dialog.pack();
+        dialog.setVisible(true);
     }
     
     public void displayTable(String[][] data)

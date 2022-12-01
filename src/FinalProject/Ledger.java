@@ -61,22 +61,6 @@ public class Ledger{
             index = attendanceDates.indexOf(lDate);
         }
 
-        // HashMap<String, Integer> newStudents = new HashMap<String, Integer>();
-
-        // for(String key : attMap.keySet())
-        // {
-        //     boolean inRoster = false;
-        //     for(Student student : roster)
-        //         if(key == student.getAsurite())
-        //             inRoster = true;
-                
-        //     if(!inRoster)
-        //     {
-        //         newStudents.put(key, attMap.get(key));
-        //         attMap.remove(key); // remove the new student from the attendance map   
-        //     }
-        // }
-
         attendanceData.get(index).putAll(attMap);
     }
 
