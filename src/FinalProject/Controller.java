@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controller extends JPanel implements ActionListener{
     private Ledger ledger;
@@ -42,6 +43,26 @@ public class Controller extends JPanel implements ActionListener{
                 */
                 throw new RuntimeException(ex);
             }
+        }
+
+        if(action=="Add Attendance")
+        {
+            
+            String path = display.displayAttendanceFileChooser();
+            if(path == "")
+            {
+                //add error that tells user they must select csv file
+                return;
+            }
+            try{
+                HashMap<String, Integer> attMap = filemanager.loadAttendanceFile(path);
+                ledger.addAttendance(path, attMap);
+            }
+            catch(IOException ex)
+            {
+                throw new RuntimeException(ex);
+            }
+        
         }
     }
     //can be used for both plotting the attendance data and roster data.
