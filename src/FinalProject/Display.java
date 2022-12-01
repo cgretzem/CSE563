@@ -38,6 +38,10 @@ public class Display extends JPanel{
         addAttendanceItem.addActionListener(parent);
         menu.add(menuItem);
         menu.add(addAttendanceItem);
+        JMenu about = new JMenu("About");
+        menuBar.add(about);
+        about.addMenuListener(parent);
+ 
     }
 
 

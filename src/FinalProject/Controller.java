@@ -1,6 +1,7 @@
 package FinalProject;
 
 import javax.swing.*;
+import javax.swing.event.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +10,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Controller extends JPanel implements ActionListener{
+public class Controller extends JPanel implements ActionListener, MenuListener{
     private Ledger ledger;
     private Display display;
     private FileManager filemanager;
@@ -28,6 +29,7 @@ public class Controller extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
+        System.out.print("actionPerformed: "+ action);
         if(action == "Upload")
         {
             try {
@@ -76,6 +78,27 @@ public class Controller extends JPanel implements ActionListener{
             }
         
         }
+    }
+
+    @Override
+    public void menuSelected(MenuEvent e) {
+        System.out.println("menuSelected");
+        JDialog teamInfo = new JDialog(frame, "Team comprised of ");
+        String s = "<html>Yu-Cheng Chen<br/>Cooper Gretzema<br/>Ariana Rajewski<br/>Charishma Anubrolu<br/>Jayasai Kalyan Reddy Tummuru<br/>Gnana chaitanya ummadisingu</html>";
+        JLabel label = new JLabel(s, SwingConstants.CENTER);
+        teamInfo.add(label);
+        teamInfo.setSize(300,200);
+        teamInfo.setVisible(true);
+    }
+
+    @Override
+    public void menuDeselected(MenuEvent e) {
+        System.out.println("menuDeselected");
+    }
+
+    @Override
+    public void menuCanceled(MenuEvent e) {
+        System.out.println("menuCanceled");
     }
 
 }
