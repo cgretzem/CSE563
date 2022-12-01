@@ -76,8 +76,7 @@ public class FileManager
             String[] student_details = strLine.split(",");
             if (student_details.length == 4) {
                 System.out.println(Arrays.toString(student_details));
-                int id = Integer.parseInt(student_details[0]);
-                Student student = new Student(id, student_details[1], student_details[2], student_details[3]);
+                Student student = new Student(student_details[0], student_details[1], student_details[2], student_details[3]);
                 students_list.add(student);
             }
 

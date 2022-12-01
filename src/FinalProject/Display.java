@@ -29,7 +29,7 @@ public class Display extends JPanel{
         menuItem.addActionListener(parent);
         menu.add(menuItem);
         JMenuItem addAttendanceItem=new JMenuItem("Add Attendance");
-        menuItem.addActionListener(parent);
+        addAttendanceItem.addActionListener(parent);
         menu.add(menuItem);
         menu.add(addAttendanceItem);
     }
