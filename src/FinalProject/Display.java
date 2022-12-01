@@ -1,6 +1,8 @@
 package FinalProject;
 
 import java.awt.BorderLayout;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -72,5 +74,29 @@ public class Display extends JPanel{
         if(returnVal == JFileChooser.APPROVE_OPTION)
             selectedPath = chooser.getSelectedFile().getAbsolutePath();
         return selectedPath;
+    }
+
+    public String showJFileChooser() throws IOException {
+        //implement file chooser.
+        String selectedFile="";
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files", "csv", "CSV");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(parent);
+        if(returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            selectedFile= chooser.getSelectedFile().getAbsolutePath();
+            if(!selectedFile.equals(""))
+                return selectedFile;
+            else
+            {
+                throw new IOException("CSV file not selected");
+            }
+        }
+        else
+        {
+            throw new IOException("CSV File not selected");
+        }
+
     }
 }
