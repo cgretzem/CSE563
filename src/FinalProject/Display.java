@@ -31,13 +31,19 @@ public class Display extends JPanel{
         frame.setJMenuBar(menuBar);
         JMenu menu = new JMenu("File");
         menuBar.add(menu);
+
         JMenuItem menuItem=new JMenuItem("Upload");
         menuItem.addActionListener(parent);
         menu.add(menuItem);
+
         JMenuItem addAttendanceItem=new JMenuItem("Add Attendance");
         addAttendanceItem.addActionListener(parent);
         menu.add(menuItem);
         menu.add(addAttendanceItem);
+
+        JMenuItem saveMenuItem=new JMenuItem("Save");
+        menuItem.addActionListener(parent);
+        menu.add(saveMenuItem);
     }
 
 
