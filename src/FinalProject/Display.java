@@ -1,7 +1,7 @@
 package FinalProject;
 
 import java.awt.BorderLayout;
-
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -24,9 +24,11 @@ public class Display extends JPanel{
      * The Menu bar at the top of the GUI
      */
     JMenuBar menuBar;
-    /**
-     * The Controller that will have the listeners for the GUI
-     */
+
+
+
+    private JTable table;
+    private JScrollPane scp;
     Controller parent;
 
     /**
@@ -58,10 +60,19 @@ public class Display extends JPanel{
         JMenuItem menuItem=new JMenuItem("Load a Roster");
         menuItem.addActionListener(parent);
         menu.add(menuItem);
+
         JMenuItem addAttendanceItem=new JMenuItem("Add Attendance");
         addAttendanceItem.addActionListener(parent);
-        menu.add(menuItem);
+//        menu.add(menuItem);
         menu.add(addAttendanceItem);
+
+        JMenuItem saveMenuItem=new JMenuItem("Save");
+        saveMenuItem.addActionListener(parent);
+        menu.add(saveMenuItem);
+        JMenu about = new JMenu("About");
+        menuBar.add(about);
+        about.addMenuListener(parent);
+ 
     }
 
     /**
@@ -78,6 +89,17 @@ public class Display extends JPanel{
         box.setVisible(true);
 
     }
+
+    public void displaySuccessAfterSave()
+    {
+        JDialog box = new JDialog(frame, "SUCCESS");
+        JLabel label = new JLabel("<html>" + "File Saved Successfully!" + "</html>", SwingConstants.CENTER);
+        box.add(label);
+        box.setSize(300,200);
+        box.setVisible(true);
+
+    }
+
     
     /**
      * Displays a table with roster information. Cannot run without a roster.
@@ -147,6 +169,35 @@ public class Display extends JPanel{
         {
             throw new IOException("CSV File not selected");
         }
+    }
 
+    public String getDestinationPath() throws IOException {
+        //implement file chooser.
+        String path = "";
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int option = fileChooser.showOpenDialog(frame);
+        if(option == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+           path = file.getAbsolutePath();
+
+        if(!path.equals("")) {
+            return path;
+        }
+        else
+        {
+            throw new IOException("CSV file not selected");
+        }
+        }
+        else{
+            throw new IOException("CSV file not selected");
+        }
+
+    }
+
+
+
+    public JTable getTable() {
+        return table;
     }
 }

@@ -1,22 +1,23 @@
 package FinalProject;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
+import javax.swing.event.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Controller is responsible for controlling the interactions between the GUI, the file system, and the internal storage system
- */
-public class Controller extends JPanel implements ActionListener{
+public class Controller extends JPanel implements ActionListener, MenuListener{
     private Ledger ledger;
     private Display display;
     private FileManager filemanager;
-
+    private JFrame frame;
 
 
     /**
@@ -89,6 +90,58 @@ public class Controller extends JPanel implements ActionListener{
             }
         
         }
+
+
+        if(action == "Save") {
+
+            if (display.getTable() != null && display.getTable().getColumnCount()>4) {
+                try {
+                    String destinationPath = display.getDestinationPath();
+                    TableModel tableModel = display.getTable().getModel();
+                    FileWriter saveFile = new FileWriter(new File(destinationPath + "/saveFile.csv"));
+                    for (int i = 0; i < tableModel.getColumnCount(); i++) {
+                        saveFile.write(tableModel.getColumnName(i) + ",");
+                    }
+                    saveFile.write("\n");
+
+                    for (int i = 0; i < tableModel.getRowCount(); i++) {
+                        for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                            saveFile.write(tableModel.getValueAt(i, j).toString() + ",");
+                        }
+                        saveFile.write("\n");
+                    }
+                    saveFile.close();
+                    display.displaySuccessAfterSave();
+                } catch (IOException ex) {
+                    display.displayError(new Exception("Error saving file"));
+                    return;
+                }
+            }
+            else{
+                display.displayError(new Exception("Please upload roster and attendance data before saving."));
+            }
+        }
+    }
+
+    @Override
+    public void menuSelected(MenuEvent e) {
+        System.out.println("menuSelected");
+        JDialog teamInfo = new JDialog(frame, "Team comprised of ");
+        String s = "<html>Yu-Cheng Chen<br/>Cooper Gretzema<br/>Ariana Rajewski<br/>Charishma Anubrolu<br/>Jayasai Kalyan Reddy Tummuru<br/>Gnana chaitanya ummadisingu</html>";
+        JLabel label = new JLabel(s, SwingConstants.CENTER);
+        teamInfo.add(label);
+        teamInfo.setSize(300,200);
+        teamInfo.setVisible(true);
+    }
+
+    @Override
+    public void menuDeselected(MenuEvent e) {
+        System.out.println("menuDeselected");
+    }
+
+    @Override
+    public void menuCanceled(MenuEvent e) {
+        System.out.println("menuCanceled");
     }
 
 }
