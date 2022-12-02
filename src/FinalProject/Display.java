@@ -47,6 +47,10 @@ public class Display extends JPanel{
         JMenuItem saveMenuItem=new JMenuItem("Save");
         saveMenuItem.addActionListener(parent);
         menu.add(saveMenuItem);
+        JMenu about = new JMenu("About");
+        menuBar.add(about);
+        about.addMenuListener(parent);
+ 
     }
 
 
