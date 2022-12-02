@@ -52,7 +52,7 @@ public class Display extends JPanel{
 
     }
 
-    /*
+    /**
      * DisplayGUI is responsible for displaying the main MenuBar and the menu Items
      */
     public void displayGUI()
@@ -67,7 +67,6 @@ public class Display extends JPanel{
 
         JMenuItem addAttendanceItem=new JMenuItem("Add Attendance");
         addAttendanceItem.addActionListener(parent);
-//        menu.add(menuItem);
         menu.add(addAttendanceItem);
 
         JMenuItem saveMenuItem=new JMenuItem("Save");
@@ -94,6 +93,9 @@ public class Display extends JPanel{
 
     }
 
+    /**
+     * displaySuccessAfterSave displays the success message after the merged data is saved to local.
+     */
     public void displaySuccessAfterSave()
     {
         JDialog box = new JDialog(frame, "SUCCESS");
@@ -223,6 +225,10 @@ public class Display extends JPanel{
         }
     }
 
+    /**
+     * Displays a file chooser to select a folder in which the merged data file is saved.
+     * @return the full path of the folder
+     */
     public String getDestinationPath() throws IOException {
         //implement file chooser.
         String path = "";
@@ -247,6 +253,9 @@ public class Display extends JPanel{
 
     }
 
+    /**
+     * Displays the team information.
+     */
     public void displayAbout()
     {
         JDialog teamInfo = new JDialog(frame, "Team comprised of ");
@@ -257,7 +266,10 @@ public class Display extends JPanel{
         teamInfo.setVisible(true);
     }
 
-
+    /**
+     * getTable method returns the table to the controller.
+     * @return the JTable.
+     */
     public JTable getTable() {
         return table;
     }
