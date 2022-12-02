@@ -108,11 +108,13 @@ public class Display extends JPanel{
     {
         String message = "Data loaded for " + numLoaded + " users in the roster.\n" + newStudents.size();
 
+        // Format "additional attendee" message wording
         if(newStudents.size() == 1)
             message += " additional attendee was found.\n\n";
         else
             message += " additional attendees were found.\n\n";
 
+        // Format "asurite, connected" message wording
         for(int i = 0; i < newStudents.size(); i++)
         {
             String asurite = newStudents.keySet().toArray()[i].toString();
@@ -126,10 +128,10 @@ public class Display extends JPanel{
             message += result;
         }      
 
-        // JOptionPane.showMessageDialog(frame, message);
         JOptionPane optionPane = new JOptionPane(message, JOptionPane.OK_OPTION);
         JDialog dialog = new JDialog(frame, "New Students Found", true);
         dialog.setContentPane(optionPane);
+        // Add property listener to allow the JDialog to close
         optionPane.addPropertyChangeListener(
             new PropertyChangeListener() {
                 public void propertyChange(PropertyChangeEvent e) {

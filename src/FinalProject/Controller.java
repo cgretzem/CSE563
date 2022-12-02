@@ -71,14 +71,34 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
                 return;
             }
             try{
+                ArrayList<Student> roster = ledger.getRoster();
                 HashMap<String, HashMap<String, Integer>> attMap = filemanager.loadAttendanceFolder(path);
+                HashMap<String, Integer>newStudents = new HashMap<String, Integer>();
                 for(String d : attMap.keySet()){
-                    ledger.addAttendance(d, attMap.get(d));
+                    HashMap<String, Integer> attendanceMap = attMap.get(d);
+                    for(String key : attendanceMap.keySet())
+                    {
+                        boolean inRoster = false;
+                        for(Student student : roster)
+                        {
+                            if(key.equals(student.getAsurite()))
+                            {
+                                inRoster = true;
+                                break;
+                            }
+                        }
+                        
+                        if(!inRoster)
+                            newStudents.put(key, attendanceMap.get(key));
+                    }
+
+                    ledger.addAttendance(d, attendanceMap);
                     String recentDate = ledger.getRecentDate();
                     display.addAttendanceColumn(recentDate, ledger.generateColumn());
                 }
-                
-                
+
+                if (newStudents.size() > 0)
+                    display.notifyUser(newStudents, roster.size());
             }
             catch(IOException ex)
             {
