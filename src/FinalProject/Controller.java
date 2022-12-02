@@ -1,10 +1,13 @@
 package FinalProject;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import javax.swing.event.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -14,7 +17,6 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
     private Ledger ledger;
     private Display display;
     private FileManager filemanager;
-
     private JFrame frame;
 
 
@@ -77,6 +79,34 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
                 display.displayError(new Exception("Invalid file name: Attendance file name must be\nDDMMYYYY.csv"));
             }
         
+        }
+
+
+        if(action == "Save") {
+
+            if (display.getTable() != null && display.getTable().getColumnCount()>4) {
+                try {
+                    String destinationPath = display.getDestinationPath();
+                    TableModel tableModel = display.getTable().getModel();
+                    FileWriter saveFile = new FileWriter(new File(destinationPath + "/saveFile.csv"));
+                    for (int i = 0; i < tableModel.getColumnCount(); i++) {
+                        saveFile.write(tableModel.getColumnName(i) + ",");
+                    }
+                    saveFile.write("\n");
+
+                    for (int i = 0; i < tableModel.getRowCount(); i++) {
+                        for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                            saveFile.write(tableModel.getValueAt(i, j).toString() + ",");
+                        }
+                        saveFile.write("\n");
+                    }
+                    saveFile.close();
+                    display.displaySuccessAfterSave();
+                } catch (IOException ex) {
+                    display.displayError(new Exception("Error saving file"));
+                    return;
+                }
+            }
         }
     }
 
