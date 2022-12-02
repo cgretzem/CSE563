@@ -130,4 +130,8 @@ public class Ledger{
         return output;
     }
 
+    public Object getRecentDate(String v) {
+        return null;
+    }
+
 }

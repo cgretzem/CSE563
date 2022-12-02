@@ -3,7 +3,21 @@ package FinalProject;
 import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
+import java.awt.Color;  
+import javax.swing.JFrame;  
+import javax.swing.SwingUtilities;  
+import javax.swing.WindowConstants;  
+import org.jfree.chart.ChartFactory;  
+import org.jfree.chart.ChartPanel;  
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;  
+import org.jfree.data.xy.XYDataset;  
+import org.jfree.data.xy.XYSeries;  
+import org.jfree.data.xy.XYSeriesCollection;  
+import java.util.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -16,7 +30,7 @@ public class Display extends JPanel{
     JMenuBar menuBar;
 
 
-
+    private Ledger ledger;
     private JTable table;
     private JScrollPane scp;
     Controller parent;
@@ -47,10 +61,31 @@ public class Display extends JPanel{
         JMenuItem saveMenuItem=new JMenuItem("Save");
         saveMenuItem.addActionListener(parent);
         menu.add(saveMenuItem);
+
+        JMenuItem plotData=new JMenuItem("plot");
+        plotData.addActionListener(parent);
+        menu.add(plotData);
+
         JMenu about = new JMenu("About");
         menuBar.add(about);
         about.addMenuListener(parent);
  
+    }
+
+    public void createPlot()
+    {
+        XYSeriesCollection graphinfo = new XYSeriesCollection();
+        System.out.println(ledger.getRecentDate());
+        // for( .Entry<Integer, String> entry :  ledger.getRecentDate() ){
+        //     System.out.println( entry.getKey() + " = " + entry.getValue() );
+        // }
+        // for(HashMap k,v : ledger.getRecentDate())
+        // {
+        //     graphinfo.addSeries(ledger.getRecentDate(v));
+        // }
+        JFreeChart chart = ChartFactory.createScatterPlot("Attendence", "Num of Students", "Percentage attendence", graphinfo, PlotOrientation.HORIZONTAL, true, false, false);
+
+
     }
 
 
