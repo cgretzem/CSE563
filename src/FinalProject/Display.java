@@ -129,7 +129,11 @@ public class Display extends JPanel{
 
     public void createPlot(ArrayList<Integer> studentsAttended , ArrayList<String> dates)
     {
-        scp.setVisible(false);
+        if(this.scp != null)
+        {
+            scp.setVisible(false);
+        }
+        
         Plot plot = new Plot(studentsAttended, dates);
         frame.add(plot, BorderLayout.EAST);
         frame.revalidate();
