@@ -157,7 +157,7 @@ public class Display extends JPanel{
         {
             String[] columnNames = {"ID", "First Name", "Last Name", "Asurite"};
             model = new DefaultTableModel(data, columnNames);
-            JTable table = new JTable(model);
+            table = new JTable(model);
             table.setBounds(30, 40, 200, 300);
             JScrollPane scp = new JScrollPane(table);
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
