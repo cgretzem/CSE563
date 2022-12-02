@@ -104,6 +104,12 @@ public class Display extends JPanel{
 
     }
 
+    /**
+     * Create a window that displays the number of un-rostered students found when loading attendance files.
+     * Shows a list of un-rostered students including the amount of time they were connected for.
+     * @param newStudents
+     * @param numLoaded
+     */
     public void notifyUser(HashMap<String, Integer> newStudents, int numLoaded)
     {
         String message = "Data loaded for " + numLoaded + " users in the roster.\n" + newStudents.size();
