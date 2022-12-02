@@ -8,7 +8,11 @@ import java.util.HashMap;
 import java.util.Locale;
 
 
-
+/**
+ * This class is responsible storing the data which is to be
+ * displayed on the screen.
+ *
+ */
 public class Ledger{
     private static Ledger theLedger;
     private ArrayList<Student> roster;
@@ -18,13 +22,20 @@ public class Ledger{
     private ArrayList<String> attendanceDates; 
     
     //singleton design pattern
+    /**
+     * Creates a ledger instance.
+     *
+     */
     private Ledger()
     {
         roster = new ArrayList<Student>();
         attendanceData = new ArrayList<HashMap<String, Integer>>();
         attendanceDates = new ArrayList<String>();
     }
-
+    /**
+     * Gets the instance of ledger by calling the constructor
+     *
+     */
     public static Ledger getInstance()
     {
         if (theLedger == null)
@@ -33,6 +44,11 @@ public class Ledger{
         }
         return theLedger;
     }
+
+    /**
+     * Sets the roster data.
+     *
+     */
 
     public void addRoster(ArrayList<Student> list)
     {
@@ -64,11 +80,16 @@ public class Ledger{
 
         attendanceData.get(index).putAll(attMap);
     }
-
+    /**
+     * This method is responsible for setting the no of students
+     * for a particular attendance date
+     * @return returns the roster data.
+     */
     public ArrayList<Student> getRoster()
     {
         return roster;
     }
+
     public ArrayList<HashMap<String, Integer>> getAttendance()
     {
         return attendanceData;
@@ -99,7 +120,10 @@ public class Ledger{
         }
         return output;
     }
-
+    /**
+     * This method is responsible to generate a 2d matrix of roster data.
+     * @return return 2d matrix of roster data to the controller.
+     */
     public String[][] generateRosterData()
     {
         String[][] output = new String[roster.size()][4];

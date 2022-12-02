@@ -4,9 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 
-
+/**
+ * This is a main class where is the frame of GUI is created.
+ *
+ */
 public class Main extends JFrame
 {
+	/**
+	 * This is a main method where is the frame of GUI is created.
+	 *
+	 */
     public static void main(String[] args)
     {
         JFrame frame = new JFrame("CSE563 Final Project");
