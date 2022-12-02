@@ -1,12 +1,16 @@
 package FinalProject;
 
 import java.awt.BorderLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+
+import java.util.HashMap;
 
 
 /**
@@ -100,6 +104,46 @@ public class Display extends JPanel{
 
     }
 
+    public void notifyUser(HashMap<String, Integer> newStudents, int numLoaded)
+    {
+        String message = "Data loaded for " + numLoaded + " users in the roster.\n" + newStudents.size();
+
+        if(newStudents.size() == 1)
+            message += " additional attendee was found.\n\n";
+        else
+            message += " additional attendees were found.\n\n";
+
+        for(int i = 0; i < newStudents.size(); i++)
+        {
+            String asurite = newStudents.keySet().toArray()[i].toString();
+            int minutes = newStudents.get(asurite);
+            String result;
+            if(minutes == 1)
+                result = asurite + ", connected for " + minutes + " minute\n";
+            else
+                result = asurite + ", connected for " + minutes + " minutes\n";
+
+            message += result;
+        }      
+
+        // JOptionPane.showMessageDialog(frame, message);
+        JOptionPane optionPane = new JOptionPane(message, JOptionPane.OK_OPTION);
+        JDialog dialog = new JDialog(frame, "New Students Found", true);
+        dialog.setContentPane(optionPane);
+        optionPane.addPropertyChangeListener(
+            new PropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent e) {
+                    String prop = e.getPropertyName();
+
+                    if (dialog.isVisible() && (e.getSource() == optionPane) && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                        dialog.setVisible(false);
+                    }
+                }
+            }
+        );
+        dialog.pack();
+        dialog.setVisible(true);
+    }
     
     /**
      * Displays a table with roster information. Cannot run without a roster.
