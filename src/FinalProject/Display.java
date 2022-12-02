@@ -195,6 +195,15 @@ public class Display extends JPanel{
 
     }
 
+    public void displayAbout()
+    {
+        JDialog teamInfo = new JDialog(frame, "Team comprised of ");
+        String s = "<html>Yu-Cheng Chen<br/>Cooper Gretzema<br/>Ariana Rajewski<br/>Charishma Anubrolu<br/>Jayasai Kalyan Reddy Tummuru<br/>Gnana chaitanya ummadisingu</html>";
+        JLabel label = new JLabel(s, SwingConstants.CENTER);
+        teamInfo.add(label);
+        teamInfo.setSize(300,200);
+        teamInfo.setVisible(true);
+    }
 
 
     public JTable getTable() {

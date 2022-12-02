@@ -17,7 +17,7 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
     private Ledger ledger;
     private Display display;
     private FileManager filemanager;
-    private JFrame frame;
+
 
 
     /**
@@ -126,12 +126,7 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
     @Override
     public void menuSelected(MenuEvent e) {
         System.out.println("menuSelected");
-        JDialog teamInfo = new JDialog(frame, "Team comprised of ");
-        String s = "<html>Yu-Cheng Chen<br/>Cooper Gretzema<br/>Ariana Rajewski<br/>Charishma Anubrolu<br/>Jayasai Kalyan Reddy Tummuru<br/>Gnana chaitanya ummadisingu</html>";
-        JLabel label = new JLabel(s, SwingConstants.CENTER);
-        teamInfo.add(label);
-        teamInfo.setSize(300,200);
-        teamInfo.setVisible(true);
+        display.displayAbout();
     }
 
     @Override
