@@ -43,10 +43,10 @@ public class Ledger{
     {
         //date must be YYYYMMDD
         
-        DateFormat format = new SimpleDateFormat("YYYYMMDD");
+        DateFormat format = new SimpleDateFormat("YYYYMMdd");
         Date theDate = new Date();
          theDate = format.parse(date);
-        DateFormat printFormat = new SimpleDateFormat("MM/DD/YYYY");
+        DateFormat printFormat = new SimpleDateFormat("MM/dd/YYYY");
         String lDate = printFormat.format(theDate);
         
         int index = 0;

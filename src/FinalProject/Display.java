@@ -14,6 +14,9 @@ public class Display extends JPanel{
 
     JFrame frame;
     JMenuBar menuBar;
+
+
+
     private JTable table;
     private JScrollPane scp;
     Controller parent;
@@ -38,11 +41,11 @@ public class Display extends JPanel{
 
         JMenuItem addAttendanceItem=new JMenuItem("Add Attendance");
         addAttendanceItem.addActionListener(parent);
-        menu.add(menuItem);
+//        menu.add(menuItem);
         menu.add(addAttendanceItem);
 
         JMenuItem saveMenuItem=new JMenuItem("Save");
-        menuItem.addActionListener(parent);
+        saveMenuItem.addActionListener(parent);
         menu.add(saveMenuItem);
     }
 
@@ -57,6 +60,17 @@ public class Display extends JPanel{
         box.setVisible(true);
 
     }
+
+    public void displaySuccessAfterSave()
+    {
+        JDialog box = new JDialog(frame, "SUCCESS");
+        JLabel label = new JLabel("<html>" + "File Saved Successfully!" + "</html>", SwingConstants.CENTER);
+        box.add(label);
+        box.setSize(300,200);
+        box.setVisible(true);
+
+    }
+
     
     public void displayTable(String[][] data)
     {
@@ -114,6 +128,35 @@ public class Display extends JPanel{
         {
             throw new IOException("CSV File not selected");
         }
+    }
 
+    public String getDestinationPath() throws IOException {
+        //implement file chooser.
+        String path = "";
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int option = fileChooser.showOpenDialog(frame);
+        if(option == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+           path = file.getAbsolutePath();
+
+        if(!path.equals("")) {
+            return path;
+        }
+        else
+        {
+            throw new IOException("CSV file not selected");
+        }
+        }
+        else{
+            throw new IOException("CSV file not selected");
+        }
+
+    }
+
+
+
+    public JTable getTable() {
+        return table;
     }
 }
