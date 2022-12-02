@@ -71,7 +71,12 @@ public class FileManager
         return bigMap;
     }
 
-
+    /**
+     * loadDetailsToDataStructure is responsible for taking a file path and returning a ArrayList of students.
+     * @param selectedPath the full path of the file the user selected as an roster file
+     * @throws IOException if the selectedPath is empty.
+     * @return An ArrayList of Students with IDs, first name, last name, ASURITE id.
+     */
     public ArrayList<Student> loadDetailsToDataStructure(String selectedPath) throws IOException {
         BufferedReader br=new BufferedReader(new FileReader(selectedPath));
         ArrayList<Student> students_list=new ArrayList<Student>();

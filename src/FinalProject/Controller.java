@@ -13,6 +13,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class is responsible for processing the incoming requests and renders the view.
+ */
 public class Controller extends JPanel implements ActionListener, MenuListener{
     private Ledger ledger;
     private Display display;
@@ -146,17 +149,30 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
         }
     }
 
+    /**
+     * Responds when the menu is selected
+     * @param e the event that was triggered
+     */
+
     @Override
     public void menuSelected(MenuEvent e) {
         System.out.println("menuSelected");
         display.displayAbout();
     }
 
+    /**
+     * Responds when the menu is deselected
+     * @param e the event that was triggered
+     */
     @Override
     public void menuDeselected(MenuEvent e) {
         System.out.println("menuDeselected");
     }
 
+    /**
+     * Responds when the menu is canceled.
+     * @param e the event that was triggered
+     */
     @Override
     public void menuCanceled(MenuEvent e) {
         System.out.println("menuCanceled");

@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 
 /**
- * The Display class is responisble for rendering everything the user sees, including the attendance table, the graphs,
+ * The Display class is responsible for rendering everything the user sees, including the attendance table, the graphs,
  * and the GUI.
  * 
  */
@@ -53,6 +53,7 @@ public class Display extends JPanel{
     }
 
     /**
+     * Constructs a display object and displays the GUI
      * DisplayGUI is responsible for displaying the main MenuBar and the menu Items
      */
     public void displayGUI()
@@ -202,6 +203,11 @@ public class Display extends JPanel{
         return selectedPath;
     }
 
+    /**
+     * This method is to implement the JFileChooser for upload.
+     * @throws IOException when the CSV file is not selected.
+     * @return the full path of the file chosen by the user
+     */
     public String showJFileChooser() throws IOException {
         //implement file chooser.
         String selectedFile="";
