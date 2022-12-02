@@ -9,26 +9,35 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Controller is responsible for controlling the interactions between the GUI, the file system, and the internal storage system
+ */
 public class Controller extends JPanel implements ActionListener{
     private Ledger ledger;
     private Display display;
     private FileManager filemanager;
 
-    private JFrame frame;
 
 
+    /**
+     * Creates a new controller instance
+     * @param frame the frame for the display class to interact with
+     */
     Controller(JFrame frame) {
         ledger = Ledger.getInstance();
-        this.frame=frame;
         display = new Display(frame,this);
         filemanager = new FileManager();
     }
 
 
+    /**
+     * Responds to ActionEvents from the GUI
+     * @param e the event that was triggered
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
-        if(action == "Upload")
+        if(action == "Load a Roster")
         {
             try {
                 String file_path=display.showJFileChooser();
@@ -61,10 +70,14 @@ public class Controller extends JPanel implements ActionListener{
                 return;
             }
             try{
-                HashMap<String, Integer> attMap = filemanager.loadAttendanceFile(path);
-                ledger.addAttendance(path.substring(path.length()-12, path.length()-3), attMap);
-                String recentDate = ledger.getRecentDate();
-                display.addAttendanceColumn(recentDate, ledger.generateColumn());
+                HashMap<String, HashMap<String, Integer>> attMap = filemanager.loadAttendanceFolder(path);
+                for(String d : attMap.keySet()){
+                    ledger.addAttendance(d, attMap.get(d));
+                    String recentDate = ledger.getRecentDate();
+                    display.addAttendanceColumn(recentDate, ledger.generateColumn());
+                }
+                
+                
             }
             catch(IOException ex)
             {

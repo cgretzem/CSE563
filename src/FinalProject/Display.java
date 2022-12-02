@@ -1,37 +1,61 @@
 package FinalProject;
 
 import java.awt.BorderLayout;
-import java.io.File;
+
 import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 
+/**
+ * The Display class is responisble for rendering everything the user sees, including the attendance table, the graphs,
+ * and the GUI.
+ * 
+ */
 public class Display extends JPanel{
 
+    /**
+     * The main frame that Display class will modify
+     */
     JFrame frame;
+    /**
+     * The Menu bar at the top of the GUI
+     */
     JMenuBar menuBar;
-    private JTable table;
-    private JScrollPane scp;
+    /**
+     * The Controller that will have the listeners for the GUI
+     */
     Controller parent;
+
+    /**
+     * The table model for the table
+     */
     private DefaultTableModel model;
 
+    /**
+     * Constructs a display object and displays the GUI
+     * @param frame the frame to modify
+     * @param parent the controller to use for listeners
+     */
     public Display(JFrame frame, Controller parent) {
         this.frame=frame;
         this.parent=parent;
         displayGUI();
 
     }
+
+    /*
+     * DisplayGUI is responsible for displaying the main MenuBar and the menu Items
+     */
     public void displayGUI()
     {
         menuBar=new JMenuBar();
         frame.setJMenuBar(menuBar);
         JMenu menu = new JMenu("File");
         menuBar.add(menu);
-        JMenuItem menuItem=new JMenuItem("Upload");
+        JMenuItem menuItem=new JMenuItem("Load a Roster");
         menuItem.addActionListener(parent);
         menu.add(menuItem);
         JMenuItem addAttendanceItem=new JMenuItem("Add Attendance");
@@ -40,7 +64,10 @@ public class Display extends JPanel{
         menu.add(addAttendanceItem);
     }
 
-
+    /**
+     * Display Error is a general purpose method that will display the specified error as a dialog box on the user's screen
+     * @param ex the exception to display
+     */
     public void displayError(Exception ex)
     {
         JDialog box = new JDialog(frame, "ERROR");
@@ -52,15 +79,19 @@ public class Display extends JPanel{
 
     }
     
+    /**
+     * Displays a table with roster information. Cannot run without a roster.
+     * @param data a String[][] filled with the rows and columns of the table, the roster data
+     */
     public void displayTable(String[][] data)
     {
-        if(table == null)
+        if(model == null)
         {
             String[] columnNames = {"ID", "First Name", "Last Name", "Asurite"};
             model = new DefaultTableModel(data, columnNames);
-            table = new JTable(model);
+            JTable table = new JTable(model);
             table.setBounds(30, 40, 200, 300);
-            scp = new JScrollPane(table);
+            JScrollPane scp = new JScrollPane(table);
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             frame.add(scp, BorderLayout.CENTER);
             frame.revalidate();
@@ -68,22 +99,30 @@ public class Display extends JPanel{
     
     }
 
+    /**
+     * Adds a new attendance column
+     * @param date String formatted date of new attendance
+     * @param col the column data containing the amount of time students attended
+     */
     public void addAttendanceColumn(String date, String[] col)
     {
         model.addColumn(date, col);
         frame.revalidate();
     }
 
-
+    /**
+     * Displays a file chooser to select an attendance csv file
+     * @return the full path of the file chosen by the user
+     */
     public String displayAttendanceFileChooser()
     {
         String selectedPath = "";
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files", "csv", "CSV");
-        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnVal = chooser.showOpenDialog(frame);
         if(returnVal == JFileChooser.APPROVE_OPTION)
             selectedPath = chooser.getSelectedFile().getAbsolutePath();
+        
         return selectedPath;
     }
 

@@ -9,7 +9,7 @@ public class Main extends JFrame
 {
     public static void main(String[] args)
     {
-        JFrame frame = new JFrame("CSE360 Final Project");
+        JFrame frame = new JFrame("CSE563 Final Project");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		Dimension maxSize = new Dimension(800,800);

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 
@@ -43,10 +44,10 @@ public class Ledger{
     {
         //date must be YYYYMMDD
         
-        DateFormat format = new SimpleDateFormat("YYYYMMDD");
+        DateFormat format = new SimpleDateFormat("yyyyMMdd", Locale.US);
         Date theDate = new Date();
-         theDate = format.parse(date);
-        DateFormat printFormat = new SimpleDateFormat("MM/DD/YYYY");
+        theDate = format.parse(date);
+        DateFormat printFormat = new SimpleDateFormat("MM/dd/yyyy");
         String lDate = printFormat.format(theDate);
         
         int index = 0;
