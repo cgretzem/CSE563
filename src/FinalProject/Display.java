@@ -1,22 +1,11 @@
 package FinalProject;
-
+import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-
-import java.awt.Color;  
-import javax.swing.JFrame;  
-import javax.swing.SwingUtilities;  
-import javax.swing.WindowConstants;  
-import org.jfree.chart.ChartFactory;  
-import org.jfree.chart.ChartPanel;  
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;  
-import org.jfree.data.xy.XYDataset;  
-import org.jfree.data.xy.XYSeries;  
-import org.jfree.data.xy.XYSeriesCollection;  
+import java.awt.Graphics;
+import java.awt.Color;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -29,8 +18,6 @@ public class Display extends JPanel{
     JFrame frame;
     JMenuBar menuBar;
 
-
-    private Ledger ledger;
     private JTable table;
     private JScrollPane scp;
     Controller parent;
@@ -62,7 +49,7 @@ public class Display extends JPanel{
         saveMenuItem.addActionListener(parent);
         menu.add(saveMenuItem);
 
-        JMenuItem plotData=new JMenuItem("plot");
+        JMenuItem plotData=new JMenuItem("Plot Data");
         plotData.addActionListener(parent);
         menu.add(plotData);
 
@@ -72,20 +59,54 @@ public class Display extends JPanel{
  
     }
 
-    public void createPlot()
+    private class Plot extends JPanel
     {
-        XYSeriesCollection graphinfo = new XYSeriesCollection();
-        System.out.println(ledger.getRecentDate());
-        // for( .Entry<Integer, String> entry :  ledger.getRecentDate() ){
-        //     System.out.println( entry.getKey() + " = " + entry.getValue() );
-        // }
-        // for(HashMap k,v : ledger.getRecentDate())
-        // {
-        //     graphinfo.addSeries(ledger.getRecentDate(v));
-        // }
-        JFreeChart chart = ChartFactory.createScatterPlot("Attendence", "Num of Students", "Percentage attendence", graphinfo, PlotOrientation.HORIZONTAL, true, false, false);
+        
+        private ArrayList<Integer> studentsAttended;
+        private ArrayList<String> dates;
+        public Plot(ArrayList<Integer> studentsAttended , ArrayList<String> dates)
+        {
+            this.studentsAttended = studentsAttended;
+            this.dates = dates;
+        }
 
+        @Override
+        protected void paintComponent(Graphics g)
+        {
+            //this.setBackground(Color.DARK_GRAY);
+            int width = 500;
+            int height = 400;
 
+            int bar_width = width / (dates.size() * 2 + 1);
+            int max = Integer.MIN_VALUE;
+            for(Integer n : studentsAttended)
+            {
+                max = Math.max(max, n);
+            }
+            int yPos = 100;
+            int xPos = bar_width;
+            for(int i = 0; i < dates.size(); i++)
+            {
+                int barHeight = height *  (studentsAttended.get(i)/ max);
+                g.setColor(Color.BLUE);
+                g.fillRect(xPos, yPos, bar_width, barHeight);
+                //g.fillRect(xPos, yPos, bar_width, barHeight);
+                xPos += bar_width*2;
+            }
+        }
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(500, 500);
+
+        }
+    }
+
+    public void createPlot(ArrayList<Integer> studentsAttended , ArrayList<String> dates)
+    {
+        scp.setVisible(false);
+        Plot plot = new Plot(studentsAttended, dates);
+        frame.add(plot, BorderLayout.EAST);
+        frame.revalidate();
     }
 
 

@@ -94,6 +94,29 @@ public class Ledger{
         return attendanceDates.get(attendanceDates.size()-1);
     }
 
+    public ArrayList<String> getDates()
+    {
+        return attendanceDates;
+    }
+
+    public ArrayList<Integer> getStudentsAttended()
+    {
+        ArrayList<Integer> output = new ArrayList<Integer>();
+        for(int i = 0; i < attendanceDates.size(); i++)
+        {
+            int total = 0;
+            for(Integer val : attendanceData.get(i).values())
+            {
+                if(val != 0)
+                {
+                    total++;
+                }
+            }
+            output.add(total);
+        }
+        return output;
+    }
+
     public String[] generateColumn()
     {
         int size = roster.size();
