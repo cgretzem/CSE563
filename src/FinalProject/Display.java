@@ -1,11 +1,14 @@
 package FinalProject;
-
+import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.HashMap;
+import java.awt.Graphics;
+import java.awt.Color;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -28,8 +31,6 @@ public class Display extends JPanel{
      * The Menu bar at the top of the GUI
      */
     JMenuBar menuBar;
-
-
 
     private JTable table;
     private JScrollPane scp;
@@ -73,16 +74,68 @@ public class Display extends JPanel{
         JMenuItem saveMenuItem=new JMenuItem("Save");
         saveMenuItem.addActionListener(parent);
         menu.add(saveMenuItem);
+
+        JMenuItem plotData=new JMenuItem("Plot Data");
+        plotData.addActionListener(parent);
+        menu.add(plotData);
+
         JMenu about = new JMenu("About");
         menuBar.add(about);
         about.addMenuListener(parent);
  
     }
 
-    /**
-     * Display Error is a general purpose method that will display the specified error as a dialog box on the user's screen
-     * @param ex the exception to display
-     */
+    private class Plot extends JPanel
+    {
+        
+        private ArrayList<Integer> studentsAttended;
+        private ArrayList<String> dates;
+        public Plot(ArrayList<Integer> studentsAttended , ArrayList<String> dates)
+        {
+            this.studentsAttended = studentsAttended;
+            this.dates = dates;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g)
+        {
+            //this.setBackground(Color.DARK_GRAY);
+            int width = 500;
+            int height = 400;
+
+            int bar_width = width / (dates.size() * 2 + 1);
+            int max = Integer.MIN_VALUE;
+            for(Integer n : studentsAttended)
+            {
+                max = Math.max(max, n);
+            }
+            int yPos = 100;
+            int xPos = bar_width;
+            for(int i = 0; i < dates.size(); i++)
+            {
+                int barHeight = height *  (studentsAttended.get(i)/ max);
+                g.setColor(Color.BLUE);
+                g.fillRect(xPos, yPos, bar_width, barHeight);
+                //g.fillRect(xPos, yPos, bar_width, barHeight);
+                xPos += bar_width*2;
+            }
+        }
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(500, 500);
+
+        }
+    }
+
+    public void createPlot(ArrayList<Integer> studentsAttended , ArrayList<String> dates)
+    {
+        scp.setVisible(false);
+        Plot plot = new Plot(studentsAttended, dates);
+        frame.add(plot, BorderLayout.EAST);
+        frame.revalidate();
+    }
+
+
     public void displayError(Exception ex)
     {
         JDialog box = new JDialog(frame, "ERROR");

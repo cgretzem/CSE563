@@ -117,6 +117,10 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
         
         }
 
+        if(action == "Plot Data")
+        {
+            display.createPlot(ledger.getStudentsAttended(), ledger.getDates());
+        }
 
         if(action == "Save") {
 
@@ -143,6 +147,7 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
                     return;
                 }
             }
+            
             else{
                 display.displayError(new Exception("Please upload roster and attendance data before saving."));
             }
