@@ -1,5 +1,3 @@
-package FinalProject;
-
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.event.*;

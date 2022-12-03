@@ -1,4 +1,3 @@
-package FinalProject;
 /**
  * This is a Student model class for holding the student details.
  *
