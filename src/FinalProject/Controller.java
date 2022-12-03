@@ -77,6 +77,7 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
                 ArrayList<Student> roster = ledger.getRoster();
                 HashMap<String, HashMap<String, Integer>> attMap = filemanager.loadAttendanceFolder(path);
                 HashMap<String, Integer>newStudents;
+                int count = 0;
                 for(String d : attMap.keySet()){
                     HashMap<String, Integer> attendanceMap = attMap.get(d);
                     newStudents = new HashMap<String, Integer>();
@@ -88,6 +89,8 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
                             if(key.equals(student.getAsurite()))
                             {
                                 inRoster = true;
+                                if(attendanceMap.get(key) > 0)
+                                    count++;
                                 break;
                             }
                         }
@@ -101,7 +104,7 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
                     display.addAttendanceColumn(recentDate, ledger.generateColumn());
 
                     if (newStudents.size() > 0)
-                        display.notifyUser(newStudents, roster.size());
+                        display.notifyUser(newStudents, count);
                 }
                 
                 
