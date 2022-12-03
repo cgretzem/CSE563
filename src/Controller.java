@@ -169,7 +169,6 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
 
     @Override
     public void menuSelected(MenuEvent e) {
-        System.out.println("menuSelected");
         display.displayAbout();
     }
 
@@ -179,7 +178,7 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
      */
     @Override
     public void menuDeselected(MenuEvent e) {
-        System.out.println("menuDeselected");
+
     }
 
     /**
@@ -188,7 +187,8 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
      */
     @Override
     public void menuCanceled(MenuEvent e) {
-        System.out.println("menuCanceled");
+
+
     }
 
 }

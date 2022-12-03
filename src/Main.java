@@ -23,7 +23,6 @@ public class Main extends JFrame
 		frame.setMaximumSize(maxSize);
 		frame.setMinimumSize(minSize);
 		Controller controller = new Controller(frame);
-		//System.out.println(controller);
 		controller.setVisible(true);
 		frame.getContentPane().add(controller, BorderLayout.WEST);
 		frame.pack();
