@@ -145,8 +145,8 @@ public class Ledger{
     }
 
     /**
-     * 
-     * @return 
+     * Generates a column of attendance data for use in the table
+     * @return a list of Integers, representing the amount of time each student attended
      */
     public String[] generateColumn()
     {

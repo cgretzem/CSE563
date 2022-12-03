@@ -96,7 +96,14 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
                         }
                         
                         if(!inRoster)
+                        {
                             newStudents.put(key, attendanceMap.get(key));
+                        }
+                            
+                    }
+                    for(String s : newStudents.keySet())
+                    {
+                        attendanceMap.remove(s);
                     }
 
                     ledger.addAttendance(d, attendanceMap);
