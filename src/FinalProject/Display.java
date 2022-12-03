@@ -84,6 +84,9 @@ public class Display extends JPanel{
  
     }
 
+    /**
+     * The Plot class is responsible for creating the graph object used to plot a bar graph that represents how many students attended that are in the roster, each day
+     */
     private class Plot extends JPanel
     {
         
@@ -141,6 +144,11 @@ public class Display extends JPanel{
         }
     }
 
+    /**
+     * Creates the plot interface and attaches it to the frame of the application
+     * @param studentsAttended an ArrayList where each index represents the number of students that attended per day as an Integer
+     * @param dates an ArrayList containing each date loaded from attendance data as a String
+     */
     public void createPlot(ArrayList<Integer> studentsAttended , ArrayList<String> dates)
     {
         if(this.scp != null)
@@ -153,7 +161,10 @@ public class Display extends JPanel{
         frame.revalidate();
     }
 
-
+    /**
+     * Displays a popup that notifies a user of an error
+     * @param ex an Exception that contains information about the error
+     */
     public void displayError(Exception ex)
     {
         JDialog box = new JDialog(frame, "ERROR");
@@ -181,8 +192,8 @@ public class Display extends JPanel{
     /**
      * Create a window that displays the number of un-rostered students found when loading attendance files.
      * Shows a list of un-rostered students including the amount of time they were connected for.
-     * @param newStudents
-     * @param numLoaded
+     * @param newStudents a HashMap containing a list of new students' asurites and times connected
+     * @param numLoaded an Integer representing the total number of rostered students
      */
     public void notifyUser(HashMap<String, Integer> newStudents, int numLoaded)
     {
