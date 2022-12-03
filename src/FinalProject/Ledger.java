@@ -32,6 +32,7 @@ public class Ledger{
         attendanceData = new ArrayList<HashMap<String, Integer>>();
         attendanceDates = new ArrayList<String>();
     }
+
     /**
      * Gets the instance of ledger by calling the constructor
      *
@@ -47,15 +48,19 @@ public class Ledger{
 
     /**
      * Sets the roster data.
-     *
+     * @param list of Student objects, the roster data
      */
-
     public void addRoster(ArrayList<Student> list)
     {
         roster = list;
     }
 
-
+    /**
+     * Adds the attendance data loaded from a file to the main attendance data HashMap
+     * @param date a String representing the date
+     * @param attMap a HashMap containing Strings of asurites and Integers of connected times for each asurite
+     * @throws ParseException if there was an issue parsing the date. This will only happen if the inputted date is not formatted correctly to be parsed.
+     */
     public void addAttendance(String date, HashMap<String, Integer> attMap) throws ParseException
     {
         //date must be YYYYMMDD
@@ -80,31 +85,47 @@ public class Ledger{
 
         attendanceData.get(index).putAll(attMap);
     }
+
     /**
-     * This method is responsible for setting the no of students
-     * for a particular attendance date
-     * @return returns the roster data.
+     * Retrieve the current roster of students as an ArrayList
+     * @return the roster data
      */
     public ArrayList<Student> getRoster()
     {
         return roster;
     }
 
+    /**
+     * Retrieve all attendance data stored as a Hashmap made up of Strings that represent a Student's asurite, and Integers that represent the amount of time a student was connected for
+     * @return the attendance data
+     */
     public ArrayList<HashMap<String, Integer>> getAttendance()
     {
         return attendanceData;
     }
 
+    /**
+     * Retrieve the most recent date added to the list of attendance dates as a String
+     * @return the most recent date
+     */
     public String getRecentDate()
     {
         return attendanceDates.get(attendanceDates.size()-1);
     }
 
+    /**
+     * Retrieve all dates loaded in the ledger as an ArrayList
+     * @return all dates
+     */
     public ArrayList<String> getDates()
     {
         return attendanceDates;
     }
 
+    /**
+     * Retrieve an Arraylist containing a number of total students in attendance for each day.
+     * @return a list where each index represents the total number of students in attendance per day.
+     */
     public ArrayList<Integer> getStudentsAttended()
     {
         ArrayList<Integer> output = new ArrayList<Integer>();
@@ -123,6 +144,10 @@ public class Ledger{
         return output;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String[] generateColumn()
     {
         int size = roster.size();
@@ -161,9 +186,4 @@ public class Ledger{
         }
         return output;
     }
-
-    public Object getRecentDate(String v) {
-        return null;
-    }
-
 }
