@@ -88,7 +88,9 @@ public class FileManager
                 Student student = new Student(student_details[0], student_details[1], student_details[2], student_details[3]);
                 students_list.add(student);
             }
-
+            else{
+                throw new IOException("Please upload correct format of the roster file");
+            }
         }
         br.close();
         return students_list;

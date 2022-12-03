@@ -55,7 +55,7 @@ public class Controller extends JPanel implements ActionListener, MenuListener{
                  * TODO:
                  * Add Error popup that tells user that they must select a CSV File
                 */
-                display.displayError(new Exception("Error Loading File"));
+                display.displayError(new Exception(ex.getMessage()));
                 return;
             }
         }
