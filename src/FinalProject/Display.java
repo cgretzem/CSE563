@@ -13,7 +13,6 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-import java.util.HashMap;
 
 
 /**
@@ -100,29 +99,44 @@ public class Display extends JPanel{
         protected void paintComponent(Graphics g)
         {
             //this.setBackground(Color.DARK_GRAY);
-            int width = 500;
-            int height = 400;
-
+            int width = frame.getWidth() - 50;
+            int height = frame.getHeight()-200;
+            g.drawRect(26, 100, width-24, height);
             int bar_width = width / (dates.size() * 2 + 1);
             int max = Integer.MIN_VALUE;
             for(Integer n : studentsAttended)
             {
                 max = Math.max(max, n);
             }
+            int graphMax = max + max%5;
             int yPos = 100;
-            int xPos = bar_width;
+            int xPos = 26;
+            int num = graphMax;
+            for(int i = 0; i < graphMax/5; i++)
+            {
+                g.drawLine(xPos, yPos, xPos+width-24, yPos);
+                g.drawString(String.valueOf(num), 5, yPos);
+                yPos += height/(graphMax/5);
+                num -= 5;
+            }
+            g.drawLine(xPos, yPos, xPos+width-24, yPos);
+            g.drawString(String.valueOf(num), 5, yPos);
+            yPos = 100;
+            xPos = bar_width+26;
             for(int i = 0; i < dates.size(); i++)
             {
                 int barHeight = height *  (studentsAttended.get(i)/ max);
                 g.setColor(Color.BLUE);
                 g.fillRect(xPos, yPos, bar_width, barHeight);
+                g.setColor(Color.BLACK);
+                g.drawString(dates.get(i), xPos, yPos+height + 25);
                 //g.fillRect(xPos, yPos, bar_width, barHeight);
                 xPos += bar_width*2;
             }
         }
         @Override
         public Dimension getPreferredSize() {
-            return new Dimension(500, 500);
+            return new Dimension(frame.getWidth(), frame.getHeight());
 
         }
     }
@@ -135,7 +149,7 @@ public class Display extends JPanel{
         }
         
         Plot plot = new Plot(studentsAttended, dates);
-        frame.add(plot, BorderLayout.EAST);
+        frame.add(plot, BorderLayout.CENTER);
         frame.revalidate();
     }
 
@@ -225,7 +239,7 @@ public class Display extends JPanel{
             model = new DefaultTableModel(data, columnNames);
             table = new JTable(model);
             table.setBounds(30, 40, 200, 300);
-            JScrollPane scp = new JScrollPane(table);
+            scp = new JScrollPane(table);
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             frame.add(scp, BorderLayout.CENTER);
             frame.revalidate();
